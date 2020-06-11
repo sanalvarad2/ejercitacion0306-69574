@@ -25,4 +25,8 @@ export class EmpresasComponent implements OnInit {
       this.ListEmpresa = res;
     });
   }
+
+  Editar(){
+    
+  }
 }
