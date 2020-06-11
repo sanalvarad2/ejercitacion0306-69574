@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Razon Social</th>
+      <th scope="col">FechaFundacion</th>
+      <th scope="col">CantidadEmpleados</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let emp of ListEmpresa'>
+      <th scope="row">{{emp.IdEmpresa}}</th>
+      <td>{{emp.RazonSocial}}</td>
+      <td>{{emp.FechaFundacion}}</td>
+      <td>{{emp.CantidadEmpleados}}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
