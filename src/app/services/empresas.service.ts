@@ -15,10 +15,18 @@ import {Empresa} from '../models/empresa';
 export class EmpresasService {
   resourceUrl: string;
   constructor( private httpClient: HttpClient ) {
-    this.resourceUrl = "https://pavii.ddns.net/api/empresas";
-   }
+    this.resourceUrl = "https://pavii.ddns.net/api/empresas/";
+  }
 
-  getAll(){
+  get(){
     return this.httpClient.get(this.resourceUrl)
+  }
+
+  getById(obj:Empresa){
+    let id = ''
+    if(obj){
+      id = obj.IdEmpresa.toString(); 
+    }
+    return this.httpClient.get(this.resourceUrl + id)
   }
 }

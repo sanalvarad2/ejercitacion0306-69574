@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" *ngIf="Form == 'L'">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -15,7 +15,7 @@
       <td>{{emp.FechaFundacion}}</td>
       <td>{{emp.CantidadEmpleados}}</td>
       <td>
-        <div class='btn btn-primary' (click)="Editar()">
+        <div class='btn btn-primary' (click)="Editar(emp)">
           Editar
         </div>
         </td>
