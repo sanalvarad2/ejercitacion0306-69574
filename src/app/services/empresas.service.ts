@@ -29,4 +29,16 @@ export class EmpresasService {
     }
     return this.httpClient.get(this.resourceUrl + id)
   }
+
+  post(obj:Empresa) {
+    return this.httpClient.post(this.resourceUrl, obj);
+  }
+
+  put(Id: number, obj:Empresa) {
+    return this.httpClient.put(this.resourceUrl + Id, obj);
+  }
+
+  delete(Id) {
+    return this.httpClient.delete(this.resourceUrl + Id);
+  }
 }

@@ -1,24 +1,98 @@
-<table class="table" *ngIf="Form == 'L'">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Razon Social</th>
-      <th scope="col">FechaFundacion</th>
-      <th scope="col">CantidadEmpleados</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor='let emp of ListEmpresa'>
-      <th scope="row">{{emp.IdEmpresa}}</th>
-      <td>{{emp.RazonSocial}}</td>
-      <td>{{emp.FechaFundacion}}</td>
-      <td>{{emp.CantidadEmpleados}}</td>
-      <td>
-        <div class='btn btn-primary' (click)="Editar(emp)">
-          Editar
-        </div>
+<div class="h3">{{Titulo}} <small> {{ListForm[Form]}}</small></div>
+<div class="container">
+  <table class="table" *ngIf="Form == 'L' && ListEmpresa.length">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Razon Social</th>
+        <th scope="col">FechaFundacion</th>
+        <th scope="col">CantidadEmpleados</th>
+       <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let emp of ListEmpresa'>
+       <th scope="row">{{emp.IdEmpresa}}</th>
+        <td>{{emp.RazonSocial}}</td>
+        <td>{{emp.FechaFundacion}}</td>
+        <td>{{emp.CantidadEmpleados}}</td>
+        <td>
+        <button type="button" class="btn btn-sm btn-outline-primary" title="Modificar" (click)="Editar(emp)">
+                    <span class="fas fa-pencil-alt"></span>
+                </button>
+        <button type="button" class="btn btn-sm btn-outline-primary" title="Ver" (click)="Ver(emp)">
+                    <span class="fas fa-eye"></span>
+                </button>
         </td>
-    </tr>
-  </tbody>
-</table>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <form name="FormReg" [formGroup]="FormReg" class="bg-light" *ngIf="Form != 'L'">
+    <fieldset [disabled]="Form==='C'">
+      
+      <div class="form-group row">
+        <label class="col col-form-label col-sm-2 col-sm-offset-1" for="RazonSocial">Razon Social 
+          <span class="text-danger">*</span>
+        </label>
+			  <div class="col col-sm-6">
+				  <input type="text" class="form-control" name="RazonSocial" formControlName="RazonSocial" [ngClass]="{'is-invalid':(FormReg.controls.RazonSocial.touched || submitted) && FormReg.controls.RazonSocial.errors}" />
+				    <span class="text-danger" *ngIf="(FormReg.controls.RazonSocial.touched || submitted) && FormReg.controls.RazonSocial.errors?.required">
+                    Dato requerido.
+            </span>
+            <span class="text-danger" *ngIf="(FormReg.controls.RazonSocial.touched || submitted) && (FormReg.controls.RazonSocial.errors?.minlength || FormReg.controls.RazonSocial.errors?.maxlength) ">
+                    Dato texto, 4 a 55 caracteres.
+            </span>
+			  </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col col-form-label col-sm-2 col-sm-offset-1" for="FechaFundacion">Fecha Fundacion
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col col-sm-6">
+          <input type="text" name="FechaFundacion" class="form-control" name="FechaFundacion" formControlName="FechaFundacion" [ngClass]="{'is-invalid':(FormReg.controls.FechaFundacion.touched || submitted) && FormReg.controls.FechaFundacion.errors}"/>
+          <span class="text-danger" *ngIf="(FormReg.controls.FechaFundacion.touched || submitted) && FormReg.controls.FechaFundacion.errors?.required">
+                    Dato requerido.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col col-form-label col-sm-2 col-sm-offset-1" for="CantidadEmpleados">Cantidad Empleados
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col col-sm-6">
+          <input type="text" class="form-control" name="CantidadEmpleados" formControlName="CantidadEmpleados" [ngClass]="{'is-invalid':(FormReg.controls.CantidadEmpleados.touched || submitted) && FormReg.controls.CantidadEmpleados.errors}"/>
+          <span class="text-danger" *ngIf="(FormReg.controls.CantidadEmpleados.touched || submitted) && FormReg.controls.CantidadEmpleados.errors?.required">
+                    Dato requerido.
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col col-form-label col-sm-2 col-sm-offset-1" for="IdEmpresa">ID
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col col-sm-6">
+          <input disabled type="text" class="form-control" name="IdEmpresa" formControlName="IdEmpresa"/>
+        </div>
+
+      </div>
+    </fieldset>
+    <!-- Botones Grabar, Cancelar/Volver' -->
+	  <div class="row justify-content-center">
+		  <button type="button" *ngIf="AccionABMC!=='C'" class="btn btn-primary" (click)="Grabar()">
+             <span class="fas fa-check"></span> Grabar
+         </button>
+		  &nbsp;
+		  <button type="button" class="btn btn-warning" (click)="Volver()">
+              <span class="fas fa-undo"></span> {{Form=='C' ? 'Volver' : 'Cancelar'}}
+          </button>
+      <button type="button" class="btn btn-danger" (click)="Eliminar()" *ngIf="Form === 'M'">
+          <span class="fas fa-trash"></span> ELIMINAR
+      </button>
+	  </div>
+  </form>
+

@@ -14,7 +14,7 @@ import { Articulo } from "../models/articulo";
 export class ArticulosService {
   resourceUrl: string;
   constructor(private httpClient: HttpClient) {
-    this.resourceUrl = "https://pavii.ddns.net/api/articulos";
+    this.resourceUrl = "https://pavii.ddns.net/api/articulos/";
   }
 
   get(Nombre: string, Activo: boolean, Pagina: number) {
