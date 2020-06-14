@@ -21,7 +21,7 @@
       <tr *ngFor='let emp of ListEmpresa'>
        <th scope="row">{{emp.IdEmpresa}}</th>
         <td>{{emp.RazonSocial}}</td>
-        <td>{{emp.FechaFundacion | date:'dd-MM-yyyy'}}</td>
+        <td>{{emp.FechaFundacion | date:'dd/MM/yyyy'}}</td>
         <td>{{emp.CantidadEmpleados}}</td>
         <td>
         <button type="button" class="btn btn-sm btn-outline-primary" title="Modificar" (click)="Editar(emp)">
@@ -91,7 +91,7 @@
     </fieldset>
     <!-- Botones Grabar, Cancelar/Volver' -->
 	  <div class="row justify-content-center">
-		  <button type="button" *ngIf="AccionABMC!=='C'" class="btn btn-primary" (click)="Grabar()">
+		  <button type="button" *ngIf="Form!=='C'" class="btn btn-primary" (click)="Grabar()">
              <span class="fas fa-check"></span> Grabar
          </button>
 		  &nbsp;

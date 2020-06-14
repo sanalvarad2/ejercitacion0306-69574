@@ -58,7 +58,7 @@ export class EmpresasComponent implements OnInit {
     this.EmpresaService.getById(emp).subscribe((res:Empresa) => {
       this.FormReg.patchValue(res);
 
-      //formatear fecha de  ISO 8061 a string dd/MM/yyyy
+      
       let fecha = this.FormatearFecha(res.FechaFundacion);
       this.FormReg.controls.FechaFundacion.patchValue(fecha);
       this.Form = 'M';
@@ -80,6 +80,7 @@ export class EmpresasComponent implements OnInit {
   }
 
   Volver() {
+    this.getEmpresas();
     this.Form = "L";
   }
 
@@ -90,8 +91,9 @@ export class EmpresasComponent implements OnInit {
     }
     const itemCopy = { ...this.FormReg.value };
 
-    var fecha:Date = itemCopy.FechaFundacion;
-    itemCopy.FechaFundacion = fecha.toString();
+    var fecha:Date = new Date(itemCopy.FechaFundacion);
+    alert(fecha.toISOString());
+    itemCopy.FechaFundacion = fecha.toISOString();
 
     if(this.Form == 'A'){
       this.EmpresaService.post(itemCopy).subscribe((res:any)=>{
@@ -110,14 +112,25 @@ export class EmpresasComponent implements OnInit {
 
   Agregar() {
     this.Form = "A";
-    this.FormReg.reset(this.FormReg.value);
+    this.FormReg.reset();
 
     this.submitted = false;
-    //this.FormReg.markAsPristine();
+    this.FormReg.markAsPristine();
     this.FormReg.markAsUntouched();
   }
 
-  private FormatearFecha(date:Date){
+  Eliminar(obj: Empresa){
+    if(obj){
+      this.EmpresaService.delete(obj.IdEmpresa).subscribe((res:any)=>{
+        this.modalDialogService.Alert("Eliminada con Exito")
+      });
+    }
+    this.getEmpresas();
+    this.Volver();
+    
+  }
+
+  private FormatearFecha(date:string){
     const d = new Date(date);
       let month = '' + (d.getMonth() + 1);
       let day = '' + d.getDate();
