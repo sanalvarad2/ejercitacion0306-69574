@@ -19,7 +19,7 @@ export class EmpresasComponent implements OnInit {
     L: "(Listado)"
   };
   Form = "L";
-
+  submitted = false;
   ListEmpresa:Empresa[] = [];
 
   //FormFiltro: FormGroup;
@@ -60,10 +60,8 @@ export class EmpresasComponent implements OnInit {
       this.FormReg.patchValue(res);
 
       //formatear fecha de  ISO 8061 a string dd/MM/yyyy
-      var arrFecha = res.FechaFundacion.substr(0, 10).split("-");
-      this.FormReg.controls.FechaFundacion.patchValue(
-        arrFecha[2] + "/" + arrFecha[1] + "/" + arrFecha[0]
-      );
+      let fecha = this.FormatearFecha(res.FechaFundacion);
+      this.FormReg.controls.FechaFundacion.patchValue(fecha);
       this.Form = 'M';
     });
   }
@@ -72,11 +70,10 @@ export class EmpresasComponent implements OnInit {
     this.EmpresaService.getById(emp).subscribe((res:Empresa) => {
       this.FormReg.patchValue(res);
 
+      
       //formatear fecha de  ISO 8061 a string dd/MM/yyyy
-      var arrFecha = res.FechaFundacion.substr(0, 10).split("-");
-      this.FormReg.controls.FechaFundacion.patchValue(
-        arrFecha[2] + "/" + arrFecha[1] + "/" + arrFecha[0]
-      );
+      let fecha = this.FormatearFecha(res.FechaFundacion);
+      this.FormReg.controls.FechaFundacion.patchValue(fecha);
       this.Form = 'C';
     });
   }
@@ -89,5 +86,23 @@ export class EmpresasComponent implements OnInit {
     
   }
 
+  Agregar() {
+    this.Form = "A";
+    this.FormReg.reset(this.FormReg.value);
+
+    this.submitted = false;
+    //this.FormReg.markAsPristine();
+    this.FormReg.markAsUntouched();
+  }
+
+  private FormatearFecha(date:Date){
+    const d = new Date(date);
+      let month = '' + (d.getMonth() + 1);
+      let day = '' + d.getDate();
+      const year = d.getFullYear();
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      return [year, month, day].join('-');
+  }
   
 }
