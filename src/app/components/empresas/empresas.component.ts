@@ -37,10 +37,7 @@ export class EmpresasComponent implements OnInit {
       FechaFundacion : [
         "",
         [
-          Validators.required,
-          Validators.pattern(
-            "(0[1-9]|[12][0-9]|3[01])[-/](0[1-9]|1[012])[-/](19|20)[0-9]{2}"
-          )
+          Validators.required
         ]
       ],
       CantidadEmpleados : [null, [Validators.required, Validators.pattern("[0-9]{1,7}")]],
@@ -56,6 +53,8 @@ export class EmpresasComponent implements OnInit {
   }
 
   Editar(emp: Empresa){
+    this.FormReg.markAsPristine();
+    this.FormReg.markAsUntouched();
     this.EmpresaService.getById(emp).subscribe((res:Empresa) => {
       this.FormReg.patchValue(res);
 
@@ -67,6 +66,8 @@ export class EmpresasComponent implements OnInit {
   }
 
   Ver(emp:Empresa){
+    this.FormReg.markAsPristine();
+    this.FormReg.markAsUntouched();
     this.EmpresaService.getById(emp).subscribe((res:Empresa) => {
       this.FormReg.patchValue(res);
 
@@ -83,7 +84,28 @@ export class EmpresasComponent implements OnInit {
   }
 
   Grabar(){
-    
+    this.submitted = true;
+    if (this.FormReg.invalid) {
+      return;
+    }
+    const itemCopy = { ...this.FormReg.value };
+
+    var fecha:Date = itemCopy.FechaFundacion;
+    itemCopy.FechaFundacion = fecha.toString();
+
+    if(this.Form == 'A'){
+      this.EmpresaService.post(itemCopy).subscribe((res:any)=>{
+        this.Volver();
+        this.modalDialogService.Alert('Registro agregado correctamente.');
+        this.Ver(res);
+      })
+    }else if (this.Form == 'M'){
+      this.EmpresaService.put(itemCopy.IdEmpresa, itemCopy).subscribe((res:any)=>{
+        this.Volver();
+        this.modalDialogService.Alert('Registro Modificado Correctamente.');
+        this.Ver(res);
+      })
+    }
   }
 
   Agregar() {

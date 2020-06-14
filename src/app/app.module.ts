@@ -20,7 +20,7 @@ import { ArticulosComponent } from "./components/articulos/articulos.component";
 import { ArticulosFamiliasComponent } from "./components/articulos-familias/articulos-familias.component";
 import { ModalDialogComponent } from "./components/modal-dialog/modal-dialog.component";
 import { EmpresasComponent } from './components/empresas/empresas.component';
-import { EmpresasService } from './services/empresas.service';
+
 
 @NgModule({
   declarations: [

@@ -1,6 +1,13 @@
 <div class="h3">{{Titulo}} <small> {{ListForm[Form]}}</small></div>
-<div class="container">
-  <table class="table" *ngIf="Form == 'L' && ListEmpresa.length">
+<div class="container" *ngIf="Form == 'L' && ListEmpresa.length">
+  <div class="row">
+    <button type="button" class="btn btn-primary" (click)="Agregar()">
+            <span class="fas fa-plus"> </span> 
+            Agregar
+    </button>
+  </div>
+  <div class="row mt-2">
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -27,6 +34,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </div>
 
   <form name="FormReg" [formGroup]="FormReg" class="bg-light" *ngIf="Form != 'L'">
