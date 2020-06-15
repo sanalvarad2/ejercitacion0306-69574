@@ -34,6 +34,21 @@
       </tr>
     </tbody>
   </table>
+  <div id="divPaginador" class="col-sm-12">
+		<div class="row bg-light">
+			<div class="col-sm-3">
+				<span class="label label-default font-weight-bold">Registros: {{CantidadTotal}}</span>
+			</div>
+			<div class="col-sm-6 text-center">
+        <ngb-pagination [(page)]="Pagina" (pageChange)="getEmpresas()" [pageSize]="10" [maxSize]="10"
+					[collectionSize]="CantidadTotal"></ngb-pagination>				
+			</div>
+			<div class="col-sm-3 text-right">
+				<button type="button" class="btn btn-primary" (click)="ImprimirListado()"><span class="fas fa-print"></span>
+                    Imprimir</button>
+			</div>
+		</div>
+	</div>
   </div>
 </div>
 

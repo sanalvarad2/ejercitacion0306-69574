@@ -10,6 +10,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
   styleUrls: ['./empresas.component.css']
 })
 export class EmpresasComponent implements OnInit {
+  Pagina = 0;
+  empPorPag = 10; 
+  CantidadTotal = 0;
   Titulo = "Empresas"; 
   ListForm = {
     A: "(Agregar)",
@@ -48,7 +51,11 @@ export class EmpresasComponent implements OnInit {
 
   getEmpresas(){
     this.EmpresaService.get().subscribe((res:Empresa[]) => {
-      this.ListEmpresa = res;
+      this.CantidadTotal = res.length;
+    
+      var aux:Empresa[] = res; 
+      var list = aux.slice(this.Pagina * this.empPorPag, (this.Pagina + 1)*this.empPorPag)
+      this.ListEmpresa = list;
     });
   }
 
@@ -128,6 +135,7 @@ export class EmpresasComponent implements OnInit {
       });
     }
   }
+
 
   private FormatearFecha(date:string){
     const d = new Date(date);
