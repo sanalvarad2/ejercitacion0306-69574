@@ -91,8 +91,7 @@ export class EmpresasComponent implements OnInit {
     }
     const itemCopy = { ...this.FormReg.value };
 
-    var fecha:Date = new Date(itemCopy.FechaFundacion);
-    alert(fecha.toISOString());
+    var fecha:Date = new Date(itemCopy.FechaFundacion);   
     itemCopy.FechaFundacion = fecha.toISOString();
 
     if(this.Form == 'A'){
