@@ -41,7 +41,7 @@ export class EmpresasComponent implements OnInit {
         ]
       ],
       CantidadEmpleados : [null, [Validators.required, Validators.pattern("[0-9]{1,7}")]],
-      IdEmpresa : [0]
+      IdEmpresa : 0
     });
     this.getEmpresas()
   }
@@ -96,7 +96,8 @@ export class EmpresasComponent implements OnInit {
     itemCopy.FechaFundacion = fecha.toISOString();
 
     if(this.Form == 'A'){
-      this.EmpresaService.post(itemCopy).subscribe((res:any)=>{
+      itemCopy.IdEmpresa = 0;
+      this.EmpresaService.post(itemCopy).subscribe((res:Empresa)=>{
         this.Volver();
         this.modalDialogService.Alert('Registro agregado correctamente.');
         this.Ver(res);
@@ -119,15 +120,14 @@ export class EmpresasComponent implements OnInit {
     this.FormReg.markAsUntouched();
   }
 
-  Eliminar(obj: Empresa){
-    if(obj){
-      this.EmpresaService.delete(obj.IdEmpresa).subscribe((res:any)=>{
+  Eliminar(){
+    let id = this.FormReg.controls.IdEmpresa.value;
+    if(id){
+      this.EmpresaService.delete(id).subscribe((res:any)=>{
         this.modalDialogService.Alert("Eliminada con Exito")
+        this.Volver();
       });
     }
-    this.getEmpresas();
-    this.Volver();
-    
   }
 
   private FormatearFecha(date:string){
