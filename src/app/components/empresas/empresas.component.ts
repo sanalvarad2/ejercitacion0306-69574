@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
   styleUrls: ['./empresas.component.css']
 })
 export class EmpresasComponent implements OnInit {
-  Pagina = 0;
+  Pagina = 1;
   empPorPag = 10; 
   CantidadTotal = 0;
   Titulo = "Empresas"; 
@@ -54,7 +54,7 @@ export class EmpresasComponent implements OnInit {
       this.CantidadTotal = res.length;
     
       var aux:Empresa[] = res; 
-      var list = aux.slice(this.Pagina * this.empPorPag, (this.Pagina + 1)*this.empPorPag)
+      var list = aux.slice((this.Pagina - 1) * this.empPorPag, this.Pagina * this.empPorPag)
       this.ListEmpresa = list;
     });
   }
